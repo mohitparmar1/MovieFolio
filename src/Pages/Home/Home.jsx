@@ -12,6 +12,7 @@ const Home = () => {
     )
       .then((res) => res.json())
       .then((data) => setPopularMovies(data.results));
+    console.log(popularMovies);
   }, []);
   return (
     <>
@@ -24,11 +25,27 @@ const Home = () => {
           showThumbs={false}
         >
           {popularMovies.map((movie) => (
-            <Link to={`/movie/${movie.id}`} key={movie.id}>
-              <div className="carousel-image">
+            <Link to={`/movie/${movie.id}`} key={movie.id} style={{textDecoration:"none"}}>
+              <div className="posterImage">
                 <img
+                  className="carousel-img"
                   src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                 />
+              </div>
+              <div className="posterImage__overlay">
+                <div className="posterImage__title">
+                  {movie ? movie.original_title : ""}
+                </div>
+                <div className="posterImage__runtime">
+                  {movie ? movie.release_date : ""}
+                  <span className="posterImage__rating">
+                    {movie ? movie.vote_average : ""}
+                    <i className="fas fa-star" />{" "}
+                  </span>
+                </div>
+                <div className="posterImage__description">
+                  {movie ? movie.overview : ""}
+                </div>
               </div>
             </Link>
           ))}
